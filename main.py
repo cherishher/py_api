@@ -5,7 +5,9 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from mod.testHandler import testHandler
 from mod.checkPWD import checkPwdHandler
 from mod.jiang_xue_query import jiang_queryHandler
-# from mod.jiang_xue_apply import jiang_applyHandler
+from mod.jiang_xue_apply import jiang_applyHandler
+from mod.jiang_xue_list import jiang_listHandler
+from mod.apply_infor import inforHandler
 # from mod.zhu_xue_query import zhu_queryHandler
 # from mod.hzu_xue_apply import zhu_applyHandler
 
@@ -31,7 +33,10 @@ class Application(tornado.web.Application):
         handlers = [
              (r'/api/test',testHandler),
              (r'/api/checkPWD',checkPwdHandler),
-             (r'/api/jiang_query',jiang_queryHandler)
+             (r'/api/jiang_query',jiang_queryHandler),
+             (r'/api/jiang_list',jiang_listHandler),
+             (r'/api/jiang_apply',jiang_applyHandler),
+             (r'/api/info',inforHandler)
             ]
         settings = dict(
             cookie_secret="7CA71A57B571B5AEAC5E64C6042415DE",

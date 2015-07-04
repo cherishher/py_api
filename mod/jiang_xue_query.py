@@ -9,8 +9,24 @@ from BeautifulSoup import BeautifulSoup
 import xml.etree.ElementTree as ET
 
 class jiang_queryHandler(tornado.web.RequestHandler):
+    @tornado.web.asynchronous
+    @tornado.gen.engine
     def get(self):
-        self.write('hello')
+        user = self.get_argument('number',default=None)
+        password = self.get_argument('password',default=None)
+        print 'here'
+        login_url = "/checkPWD"
+        client = AsyncHTTPClient()
+        request = HTTPRequest(
+                                    login_url,
+                                    method='POST',
+                                    body = urllib.urlencode({'number':user,
+                                                            'password':password}),
+                                    request_timeout=7
+                                )
+        response = yield tornado.gen.Task(client.fetch, request)
+        self.write(response.body)
+        # self.write('hello')
 
     @tornado.web.asynchronous
     @tornado.gen.engine
@@ -24,9 +40,10 @@ class jiang_queryHandler(tornado.web.RequestHandler):
         xue_login_url = 'http://xg.urp.seu.edu.cn/epstar/web/swms/mainframe/getmenu.jsp'
         xue_gong_url = 'http://xg.urp.seu.edu.cn/epstar/web/swms/mainframe/homeWithRoleSelector.jsp'
         get_url = 'http://xg.urp.seu.edu.cn/epstar/app/template.jsp?mainobj=SWMS/JXJSQ/T_JXJ_JXJXXB&tfile=XGMRMB/KJ&current.model.id=4si1f2d-20s3t1-f3cdywsn-1-f3cld7o9-7'
-        main_url = "http://xg.urp.seu.edu.cn/epstar/app/template.jsp?mainobj=SWMS/JXJSZ/T_JXJ_JXJXXB&tfile=XGMRMB/BGTAG&filter=T_JXJ_JXJXXB:SFTM=0%20and%20SFPGTM=0%20and%20SHZT!=99&page=T_JXJ_JXJXXB:curpage=1,pagesize=20&applycustom=yes&orderby=T_JXJ_JXJXXB:SQRQ%20desc"
+        main_apply_url = "http://xg.urp.seu.edu.cn/epstar/app/template.jsp?mainobj=SWMS/JXJSZ/T_JXJ_JXJXXB&tfile=XGMRMB/BGTAG&filter=T_JXJ_JXJXXB:SFTM=0%20and%20SFPGTM=0%20and%20SHZT!=99&page=T_JXJ_JXJXXB:curpage=1,pagesize=20&applycustom=yes&orderby=T_JXJ_JXJXXB:SQRQ%20desc"
+        main_get_url = "http://xg.urp.seu.edu.cn/epstar/app/template.jsp?mainobj=SWMS/JXJSZ/T_JXJ_JXJXXB&tfile=XGMRMB/BGTAG_GAIN&filter=T_JXJ_JXJXXB:SHZT=99&page=T_JXJ_JXJXXB:curpage=1,pagesize=20&applycustom=yes&orderby=T_JXJ_JXJXXB:SQRQ%20desc"
         xml_url = "http://xg.urp.seu.edu.cn/epstar/app/getxml.jsp?"
-        retjson = {'code':200, 'content':''}
+        retjson = {'code':200, 'content':'',"content_get":'',"content_apply":''}
         if not user or not password:
             retjson['code'] = 402
             retjson['content'] = 'params lack'
@@ -59,31 +76,31 @@ class jiang_queryHandler(tornado.web.RequestHandler):
                         'applycustom':'yes',
                         'orderby':'T_JXJ_JXJXXB:SQRQ desc'
                     }
-                    # request = HTTPRequest(
-                    #                     get_url,
-                    #                     method='GET',
-                    #                     headers={'Cookie':login_cookie},
-                    #                     request_timeout=4)
-                    # response = yield tornado.gen.Task(client.fetch,request)
-                    # login_cookie += ';' + response.headers['Set-Cookie'].split(';')[0]
-                    request = HTTPRequest(
-                                        main_url,
+                    request_apply = HTTPRequest(
+                                        main_apply_url,
                                         method = 'GET',
-                                        # body = urllib.urlencode(data),
                                         headers={'Cookie':login_cookie,
                                                  'Referer':'http://xg.urp.seu.edu.cn/epstar/app/template.jsp?mainobj=SWMS/JXJSQ/T_JXJ_JXJXXB&tfile=XGMRMB/KJ&current.model.id=4si1f2d-20s3t1-f3cdywsn-1-f3cld7o9-7'},
                                         request_timeout=7)
-                    response = yield tornado.gen.Task(client.fetch,request)
-                    retjson['content'] = self.deal(response.body,login_cookie)
+                    request_get = HTTPRequest(
+                                        main_get_url,
+                                        method = 'GET',
+                                        headers={'Cookie':login_cookie,
+                                                 'Referer':'http://xg.urp.seu.edu.cn/epstar/app/template.jsp?mainobj=SWMS/JXJSQ/T_JXJ_JXJXXB&tfile=XGMRMB/KJ&current.model.id=4si1f2d-20s3t1-f3cdywsn-1-f3cld7o9-7'},
+                                        request_timeout=7)
+                    response1,response2 = yield [client.fetch(request_apply),client.fetch(request_get)]
+                    retjson['content_apply'] = self.deal_apply(response1.body)
+                    retjson['content_get'] = self.deal_get(response2.body)
 
-                    length = len(retjson['content'])
+                    length1 = len(retjson['content_apply'])
+                    length2 = len(retjson['content_get'])
                     data_all = []
                     request_all = []
-                    for i in range(length):
+                    for i in range(length1):
                         data = {
                         'mainobj':'SWMS/JXJGLZXT/JXJSQ/T_JXJ_JXJZLB',
                         'Fields':'T_JXJ_JXJZLB:JXJMC,WID',
-                        'Filter':"T_JXJ_JXJZLB: JXJZLBM = '42'",
+                        'Filter':"T_JXJ_JXJZLB: JXJZLBM = '"+retjson['content_apply'][i]['name']+"'",
                         'OrderBy':'T_JXJ_JXJZLB:',
                         'CheckFP':'no'
                         }
@@ -95,15 +112,32 @@ class jiang_queryHandler(tornado.web.RequestHandler):
                                                 headers={'Cookie':login_cookie},
                                                 request_timeout=8)
                         request_all.append(request)
-                        # response = yield tornado.gen.Task(client.fetch,request)
-                    response = yield [client.fetch(i) for i in request_all]
-                    for i in range(len(response)):
-                        tree = ET.fromstring(response[i].body)
-                        retjson['content'][i]['name']=tree[0][0].text
-                    
+                    for i in range(length2):
+                        data = {
+                        'mainobj':'SWMS/JXJGLZXT/JXJSQ/T_JXJ_JXJZLB',
+                        'Fields':'T_JXJ_JXJZLB:JXJMC,WID',
+                        'Filter':"T_JXJ_JXJZLB: JXJZLBM = '"+retjson['content_get'][i]['name']+"'",
+                        'OrderBy':'T_JXJ_JXJZLB:',
+                        'CheckFP':'no'
+                        }
+                        data_all.append(data)
+                        request = HTTPRequest(
+                                                xml_url,
+                                                method = 'POST',
+                                                body = urllib.urlencode(data),
+                                                headers={'Cookie':login_cookie},
+                                                request_timeout=8)
+                        request_all.append(request)
 
-                    # retjson['content'] = response.body
-                    # self.deal(response.body)
+                    response = yield [client.fetch(i) for i in request_all]
+                    print len(response)
+                    for i in range(length1):
+                        tree = ET.fromstring(response[i].body)
+                        retjson['content_apply'][i]['name']=tree[0][0].text
+                    for i in range(length2):
+                        tree = ET.fromstring(response[i+length1].body)
+                        retjson['content_get'][i]['name']=tree[0][0].text
+                    
             except Exception,e:
                 print traceback.format_exc()
                 print str(e)
@@ -112,7 +146,7 @@ class jiang_queryHandler(tornado.web.RequestHandler):
                 pass
         self.write(json.dumps(retjson, ensure_ascii=False, indent=2))
         self.finish()
-    def deal(self,content,cookie):
+    def deal_apply(self,content):
         soup = BeautifulSoup(content)
         item = soup.findAll('td',{'nowrap':'true'})
         count = len(item)
@@ -130,9 +164,9 @@ class jiang_queryHandler(tornado.web.RequestHandler):
                     'course':item[9+14*i].text
                 }
                 ret_content.append(temp)
-            self.get_name(content,cookie,ret_content)
+            self.get_name_apply(content,ret_content)
             return ret_content
-    def get_name(self,content,cookie,ret_content):
+    def get_name_apply(self,content,ret_content):
         soup = BeautifulSoup(content)
         item = soup.findAll('script')
         script_count = len(item)
@@ -156,27 +190,33 @@ class jiang_queryHandler(tornado.web.RequestHandler):
             index1 = name_cont.find('\"')
             index2 = name_cont.find('\"',index1+1)
             ret_content[i]['name'] = name_cont[index1+1:index2]
-
-            # client = AsyncHTTPClient()
-            # data = {
-            #             'mainobj':'SWMS/JXJGLZXT/JXJSQ/T_JXJ_JXJZLB',
-            #             'Fields':'T_JXJ_JXJZLB:JXJMC,WID',
-            #             'Filter':"T_JXJ_JXJZLB: JXJZLBM = '42'",
-            #             'OrderBy':'T_JXJ_JXJZLB:',
-            #             'CheckFP':'no'
-            #         }
-            # request = HTTPRequest(
-            #                             xml_url,
-            #                             method = 'POST',
-            #                             body = urllib.urlencode(data),
-            #                             headers={'Cookie':cookie},
-            #                             request_timeout=7)
-            # response = yield tornado.gen.Task(client.fetch,request)
-            # print response.body
-
-            
-            
-
-
-# 1m5c3b2d-wame95-gferhtk1-1-gfg9usxw-8bc
-# ":"/epstar/app/template.jsp?mainobj=SWMS/JXJSQ/T_JXJ_JXJXXB&tfile=XGMRMB/KJ¤t.model.id=4si1f2d-20s3t1-f3cdywsn-1-f3cld7o9-7
+    def deal_get(self,content):
+        soup = BeautifulSoup(content)
+        item = soup.findAll('td',{'nowrap':'true'})
+        count = len(item)
+        all_item = (count)/17
+        if count<17:
+            return ''
+        else:
+            ret_content = []
+            for i in range(all_item):
+                temp = {
+                    'name':'',
+                    'term':item[5+17*i].text,
+                    'apply_time':item[6+17*i].text,
+                    'state':item[9+17*i].text,
+                    'money':item[4+17*i].text
+                }
+                ret_content.append(temp)
+            self.get_name_get(content,ret_content)
+            return ret_content
+    def get_name_get(self,content,ret_content):
+        soup = BeautifulSoup(content)
+        item = soup.findAll('script')
+        script_count = len(item)
+        all_item = len(ret_content)
+        for i in range(all_item):
+            name_cont = item[11+i*2].text
+            index1 = name_cont.find('\"')
+            index2 = name_cont.find('\"',index1+1)
+            ret_content[i]['name'] = name_cont[index1+1:index2]
