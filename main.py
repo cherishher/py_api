@@ -7,9 +7,12 @@ from mod.checkPWD import checkPwdHandler
 from mod.jiang_xue_query import jiang_queryHandler
 from mod.jiang_xue_apply import jiang_applyHandler
 from mod.jiang_xue_list import jiang_listHandler
+
 from mod.apply_infor import inforHandler
-# from mod.zhu_xue_query import zhu_queryHandler
-# from mod.hzu_xue_apply import zhu_applyHandler
+
+from mod.zhu_xue_query import zhu_queryHandler
+from mod.zhu_xue_list import zhu_listHandler
+# from mod.zzu_xue_apply import zhu_applyHandler
 
 from mod.db import engine
 # from mod.user import User
@@ -36,6 +39,8 @@ class Application(tornado.web.Application):
              (r'/api/jiang_query',jiang_queryHandler),
              (r'/api/jiang_list',jiang_listHandler),
              (r'/api/jiang_apply',jiang_applyHandler),
+             (r'/api/zhu_query',zhu_queryHandler),
+             (r'/api/zhu_list',zhu_listHandler),
              (r'/api/info',inforHandler)
             ]
         settings = dict(

@@ -1,0 +1,107 @@
+<dynamictable>
+    <global keycol="SQBM" newbutton="yes" overx="no" removebutton="yes" required="yes" sortbykey="no" uniquekey="yes"/>
+
+    <fields>
+        <text hide="yes" id="WID"/>
+
+        <text disabled="no" hide="no" id="SQBM" maxlen="40" readonly="no" required="yes" subtype="short" width="-1">
+            <name>申请编码</name>
+        </text>
+
+        <numeric disabled="no" hide="no" id="JXJZLBM" maxlen="10" readonly="no" required="no" subtype="integer" width="-1">
+            <name>奖学金种类编码</name>
+        </numeric>
+
+        <select disabled="no" hide="no" id="SQDJ" maxlen="10" readonly="no" required="no" width="-1"> 
+            <select id="SQDJ"><option value=""/></select>
+            <name>申请等级</name>
+        </select>
+
+        <select disabled="no" hide="no" id="JXJDJBM" maxlen="10" readonly="no" required="no" width="-1"><select id="JXJDJBM">   
+            <option value=""/></select>
+            <name>评定等级</name>
+        </select>
+
+        <numeric disabled="no" hide="no" id="JE" maxlen="10" readonly="no" required="no" subtype="currency" width="-1">
+            <name>金额</name>
+        </numeric>
+
+        <text disabled="no" hide="no" id="XH" maxlen="20" readonly="no" required="no" subtype="short" width="-1">
+            <name>一卡通号</name>
+        </text>
+
+        <text disabled="no" hide="no" id="XN" maxlen="4" readonly="no" required="no" subtype="short" width="-1">
+            <name>学年</name>
+        </text>
+
+        <date disabled="no" hide="no" id="SQRQ" maxlen="10" readonly="no" required="no" width="-1">
+            <name>申请日期</name>
+        </date>
+
+        <text disabled="no" hide="no" id="SQLY" maxlen="4000" readonly="no" required="no" subtype="short" width="-1">
+            <name>申请理由</name>
+        </text>
+
+        <select disabled="no" hide="no" id="SHZT" maxlen="10" readonly="no" required="no" width="-1">
+            <select id="SHZT">
+                <option value=""/>
+            </select>
+            <name>审核状态</name>
+        </select>
+
+        <boolean disabled="no" hide="no" id="SFTM" maxlen="10" readonly="no" required="no" width="-1">
+            <name>是否提名</name>
+        </boolean>
+
+        <boolean default="0" disabled="no" hide="no" id="SFPGTM" maxlen="10" readonly="no" required="no" width="-1">
+            <name>是否破格提名</name>
+        </boolean>
+
+        <boolean default="0" disabled="no" hide="no" id="SFYXWS" maxlen="10" readonly="no" required="no" width="-1">
+            <name>是否已基金会审批</name>
+        </boolean>
+
+        <select disabled="no" hide="no" id="YX" maxlen="30" readonly="no" required="no" width="-1">
+            <select id="YX">
+                <option value=""/>
+            </select>
+            <name>院系</name>
+        </select>
+
+        <text disabled="no" hide="no" id="XSH" maxlen="20" readonly="no" required="no" subtype="short" width="-1">
+            <name>学号</name>
+        </text>
+
+        <text disabled="no" hide="no" id="CJPM" maxlen="100" readonly="no" required="no" subtype="short" width="-1">
+            <name>成绩排名</name>
+        </text>
+
+        <text disabled="no" hide="no" id="SHSJQK" maxlen="1000" readonly="no" required="no" subtype="short" width="-1">
+            <name>社会实践情况</name>
+        </text>
+
+        <text disabled="no" hide="no" id="CHJLJL" maxlen="1000" readonly="no" required="no" subtype="short" width="-1">
+            <name>曾获奖励记录</name>
+        </text>
+
+        <text disabled="no" hide="no" id="KYCG" maxlen="1000" readonly="no" required="no" subtype="short" width="-1">
+            <name>科研成果</name>
+        </text>
+    </fields>
+
+    <Context BizObjName="T_JXJ_JXJXXB">
+        <GetXml Control="" Extension="" InnerData="maintain" IsSample="no"  Session="DIdBUPorQRgYMXun0R66VfN" XmlType="metaxml">
+            <MainBizObj IDType="path">SWMS/JXJGLZXT/JXJSQ/T_JXJ_JXJXXB</MainBizObj>
+            <ThisBizObj IDType=""/>
+            <Template>
+                <File IDType="">XGMRMB/BDTAG</File>
+                <Params><Param Name="sfadjsq">0</Param>
+                <Param Name="sffdj">0</Param><Param Name="opr">new</Param>
+                <Param Name="jxjzlbm">646</Param></Params>
+            </Template>
+            <ControlExt/><Role>学生,所有用户</Role>
+            <User>213131150</User>
+            <IPAddr>223.3.4.175</IPAddr>
+        </GetXml>
+    </Context>
+    </dynamictable>

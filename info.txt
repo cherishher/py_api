@@ -1,0 +1,437 @@
+﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<Script language='VBScript'
+	src='/epstar/web/2_0_0_0/client/include/xmlIsland.vbs'></Script>
+<script language='javascript'
+	src='/epstar/web/2_0_0_0/client/include/taglib_client.js'></script>
+<script language="javascript" src="/epstar/system/common/common.js"></script>
+<LINK REL="stylesheet" TYPE='text/css'
+	href="/epstar/res/css/taglib_datagrid.css"></LINK>
+
+
+
+
+
+
+
+
+
+
+
+	<title id="app_title">学生个人信息明细</title>
+	<style>
+
+	#table {
+			border-collapse:collapse; /* 关键属性：合并表格内外边框(其实表格边框有2px，外面1px，里面还有1px哦) */
+			border:solid #000; /* 设置边框属性；样式(solid=实线)、颜色(#999=灰) */
+			border-width:1px 0 0 1px; /* 设置边框状粗细：上 右 下 左 = 对应：1px 0 0 1px */
+		}
+		#table th,#table td {border:solid #000;border-width:0 1px 1px 0;padding:1px; height: 25px}
+	</style>
+	<base target="_self">
+</head>
+<body>
+
+
+
+<!-- Begin generate eidtfield -->
+	<FORM id="T_XSJBXX_XSJBB" objname="T_XSJBXX_XSJBB" method="post" mainBizObj="SWMS/XSXXGLZXT/XSJBXX/T_XSJBXX_XSJBB" idType="path" elementType="editfield" update_status="changed" >
+		<input type="hidden" name="mainobj" value="SWMS/XSXXGLZXT/XSJBXX/T_XSJBXX_XSJBB" />
+		<input type="hidden" name="mainobjidtype" value="path" />
+		<input type="hidden" name="editfield_wid" value="E3D0F8F9059743A2E0433AC0770343A2" />
+		<input type="hidden" name="taglib_userid" value="213131592" />
+		<xml id=xml_T_XSJBXX_XSJBB >
+			<Context BizObjName="T_XSJBXX_XSJBB"><GetXml Control="editfield" Extension="" InnerData="maintain" IsSample="no" Session="8ku2eTGsWn_jsnMhF4pufs7" XmlType="metaxml"><MainBizObj IDType="path">SWMS/XSXXGLZXT/XSJBXX/T_XSJBXX_XSJBB</MainBizObj><ThisBizObj IDType="path">SWMS/XSXXGLZXT/XSJBXX/T_XSJBXX_XSJBB</ThisBizObj><Template><File IDType="">XGMRMB/detail_BDTAG</File><Params><Param Name="filter" value="XH='213131592'">T_XSJBXX_XSJBB:XH='213131592'</Param></Params></Template><ControlExt/><Role>学生,所有用户</Role><User>213131592</User><IPAddr>223.3.4.175</IPAddr></GetXml></Context>
+		</xml>
+
+<table id="table" width="692" border="1" cellpadding="1" cellspacing="0" bordercolor="#000000">
+	<tr>
+		<td colspan="6" class="class_caption">
+			<label><strong>基础信息</strong></label>
+		</td>
+	</tr>
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true" width="100">学号:</td>
+		<td><DIV originValue="71Y13123" elementtype="editfield"><font id="XSH" value="71Y13123">71Y13123</font>
+</DIV> </td>
+		<td align="right" nowrap="true" width="100">姓名:</td>
+		<td><DIV originValue="梁界" elementtype="editfield"><font id="XM" value="梁界">梁界</font>
+</DIV></td>
+		<td colspan="2" rowspan="8" align="center" valign="middle">
+			
+			<img border="0" width="150" height="210" src="/epstar/web/swms/jsp/showimage.jsp?id=213131592" />
+		</td>
+	</tr>
+	
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">曾用名:</td>
+		<td><DIV originValue="null" elementtype="editfield"><font id="CYM" ></font>
+</DIV></td>
+		<td align="right" nowrap="true">姓名拼音:</td>
+		<td><DIV originValue="LIANG JIE" elementtype="editfield"><font id="XMPY" value="LIANG JIE">LIANG JIE</font>
+</DIV></td>
+	</tr>
+
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">性别:</td>
+		<td><DIV originValue="1" elementtype="editfield"><font id="XBDM" value="1">男</font>
+</DIV></td>
+		<td align="right" nowrap="true">民族:</td>
+		<td><DIV originValue="01" elementtype="editfield"><font id="MZDM" value="01">汉族</font>
+</DIV></td>
+	</tr>
+
+
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">政治面貌:</td>
+		<td><DIV originValue="03" elementtype="editfield"><font id="ZZMMDM" value="03">中国共产主义青年团团员</font>
+</DIV></td>
+		<td align="right" nowrap="true">婚姻状况:</td>
+		<td><DIV originValue="10" elementtype="editfield"><font id="HYZKDM" value="10">未婚</font>
+</DIV></td>
+	</tr>
+
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">就读方式:</td>
+		<td><DIV originValue="2" elementtype="editfield"><font id="JDFSDM" value="2">住校</font>
+</DIV> </td>
+		<td align="right" nowrap="true">出生日期:</td>
+		<td><DIV originValue="1994-01-08 0:00:00" elementtype="editfield"><font id="CSRQ" value="1994-01-08">1994-01-08</font>
+</DIV></td>
+	</tr>
+
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">证件类型:</td>
+		<td><DIV originValue="1" elementtype="editfield"><font id="SFZJLXM" value="1">身份证</font>
+</DIV></td>
+		<td align="right" nowrap="true">证件号码:</td>
+		<td><DIV originValue="340881199401084358" elementtype="editfield"><font id="SFZJH" value="340881199401084358">340881199401084358</font>
+</DIV></td>
+	</tr>
+	
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">生源地:</td>
+		<td><DIV originValue="340000" elementtype="editfield"><font id="SYDDM" value="340000">安徽省</font>
+</DIV></td>
+		<td align="right" nowrap="true">籍贯:</td>
+		<td><DIV originValue="340000" elementtype="editfield"><font id="JGDM" value="340000">安徽省</font>
+</DIV></td>
+	</tr>
+
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">入学前户口性质:</td>
+		<td><DIV originValue="1" elementtype="editfield"><font id="HKXZDM" value="1">农业户口</font>
+</DIV></td>
+		<td align="right" nowrap="true">出生地:</td>
+		<td><DIV originValue="340881" elementtype="editfield"><font id="CSDDM" value="340881">安徽省安庆市桐城市</font>
+</DIV></td>
+	</tr>
+	
+   <tr class="tr_fld_v">
+		<td align="right" nowrap="true">入学前户口所在地:</td>
+		<td colspan="3"><DIV originValue="安徽省桐城市" elementtype="editfield"><font id="YHKSZD" value="安徽省桐城市">安徽省桐城市</font>
+</DIV></td>
+	    <td align="right" nowrap="true">身份证签发日期:</td>
+		<td><DIV originValue="2010-08-20 0:00:00" elementtype="editfield"><font id="SFZQFRQ" value="2010-08-20">2010-08-20</font>
+</DIV></td>
+	</tr>
+	
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">现口所在地:</td>
+		<td colspan="3"><DIV originValue="安徽省桐城市" elementtype="editfield"><font id="HKSZD" value="安徽省桐城市">安徽省桐城市</font>
+</DIV></td>
+		<td align="right" nowrap="true">健康状况:</td>
+		<td><DIV originValue="10" elementtype="editfield"><font id="JKZKDM" value="10">健康或良好</font>
+</DIV></td>
+	</tr>
+	
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">血型:</td>
+		<td><DIV originValue="null" elementtype="editfield"><font id="XXDM" ></font>
+</DIV></td>
+		<td align="right" nowrap="true">身高(cm):</td>
+		<td><DIV originValue="183" elementtype="editfield"><font id="SG" value="183">183</font>
+</DIV></td>
+		<td align="right" nowrap="true">体重(Kg):</td>
+		<td><DIV originValue="80" elementtype="editfield"><font id="TZ" value="80">80</font>
+</DIV></td>
+	</tr>
+	
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">来源洲别:</td>
+		<td><DIV originValue="1" elementtype="editfield"><font id="LYZBDM" value="1">亚洲</font>
+</DIV></td>
+		<td align="right" nowrap="true">来源国别:</td>
+		<td><DIV originValue="156" elementtype="editfield"><font id="LYGBDM" value="156">中华人民共和国</font>
+</DIV></td>
+		<td align="right" nowrap="true">港澳台侨外:</td>
+		<td><DIV originValue="null" elementtype="editfield"><font id="GATQWDM" ></font>
+</DIV></td>
+	</tr>
+
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">一卡通号:</td>
+		<td colspan="5"><DIV originValue="213131592" elementtype="editfield"><font id="XH" value="213131592">213131592</font>
+</DIV></td>
+	</tr>
+
+	<tr>
+		<td colspan="6" class="class_caption"><label><strong>学籍信息</strong></label></td>
+	</tr>
+	<tr class="tr_fld_v">		
+		<td align="right" nowrap="true">校区:</td>
+		<td><DIV originValue="1" elementtype="editfield"><font id="XQ" value="1">九龙湖校区</font>
+</DIV> </td>
+		<td align="right" nowrap="true">院系所号:</td>
+		<td><DIV originValue="100383" elementtype="editfield"><font id="YXSH" value="100383">软件学院</font>
+</DIV> </td>
+		<td align="right" nowrap="true">专业:</td>
+		<td><DIV originValue="71Y" elementtype="editfield"><font id="ZYDM" value="71Y">软件工程（全英文）</font>
+</DIV> </td>
+	</tr>
+	
+
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">专业方向:</td>
+		<td><DIV originValue="null" elementtype="editfield"><font id="ZYFXDM" ></font>
+</DIV> </td>
+		<td align="right" nowrap="true">现在年级:</td>
+		<td><DIV originValue="2013" elementtype="editfield"><font id="XZNJ" value="2013">2013</font>
+</DIV></td>
+		<td align="right" nowrap="true">班级:</td>
+		<td><DIV originValue="71Y131" elementtype="editfield"><font id="BJDM" value="71Y131">71Y131</font>
+</DIV></td>
+
+	</tr>
+	
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">学制:</td>
+		<td><DIV originValue="4" elementtype="editfield"><font id="XZ" value="4">4</font>
+</DIV></td>
+		<td align="right" nowrap="true">预计毕业年份:</td>
+		<td><DIV originValue="2017" elementtype="editfield"><font id="YJBYNF" value="2017">2017</font>
+</DIV></td>
+		<td align="right" nowrap="true">预计毕业季度:</td>
+		<td><DIV originValue="null" elementtype="editfield"><font id="YJBYJDDM" ></font>
+</DIV></td>
+	</tr>
+	
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">学生类别:</td>
+		<td><DIV originValue="null" elementtype="editfield"><font id="XSLBDM" ></font>
+</DIV></td>
+		<td align="right" nowrap="true">就读学历:</td>
+		<td><DIV originValue="null" elementtype="editfield"><font id="JDXLDM" ></font>
+</DIV></td>
+		<td align="right" nowrap="true">就读学位:</td>
+		<td><DIV originValue="null" elementtype="editfield"><font id="JDXWDM" ></font>
+</DIV></td>
+	</tr>
+	
+
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">培养方式:</td>
+		<td><DIV originValue="null" elementtype="editfield"><font id="PYFSDM" ></font>
+</DIV></td>
+		<td align="right" nowrap="true">在册状态:</td>
+		<td><DIV originValue="1" elementtype="editfield"><font id="SFZC" value="1">在册</font>
+</DIV></td>
+		<td align="right" nowrap="true">在校状态:</td>
+		<td><DIV originValue="1" elementtype="editfield"><font id="SFZX" value="1">在校</font>
+</DIV></td>
+	</tr>
+
+	<tr class="tr_fld_v">
+ 		<td align="right" nowrap="true">实际毕业时间:</td>
+		<td colspan="5"><DIV originValue="null" elementtype="editfield"><font id="SJBYSJ" ></font>
+</DIV></td>
+	</tr>
+
+	<tr>
+		<td colspan="6" class="class_caption"><label>入学信息</label></td>
+	</tr>
+
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">何省市报考:</td>
+		<td><DIV originValue="340000" elementtype="editfield"><font id="HSSBK" value="340000">安徽省</font>
+</DIV></td>
+		<td align="right" nowrap="true">入学前单位:</td>
+		<td colspan="3"><DIV originValue="null" elementtype="editfield"><font id="RXQDW" ></font>
+</DIV></td>
+	</tr>
+
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">入学年级:</td>
+		<td><DIV originValue="2013" elementtype="editfield"><font id="RXNJ" value="2013">2013</font>
+</DIV></td>
+		<td align="right" nowrap="true">入学年份:</td>
+		<td><DIV originValue="2013" elementtype="editfield"><font id="RXNF" value="2013">2013</font>
+</DIV></td>
+		<td align="right" nowrap="true">入学季度:</td>
+		<td><DIV originValue="3" elementtype="editfield"><font id="RXJDDM" value="3">3</font>
+</DIV></td>
+	</tr>
+
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">入学方式:</td>
+		<td><DIV originValue="null" elementtype="editfield"><font id="RXFSDM" ></font>
+</DIV></td>
+		<td align="right" nowrap="true">入学日期:</td>
+		<td><DIV originValue="2013-08-25 0:00:00" elementtype="editfield"><font id="RXRQ" value="2013-08-25">2013-08-25</font>
+</DIV></td>
+		<td align="right" nowrap="true">学生来源:</td>
+		<td><DIV originValue="null" elementtype="editfield"><font id="XSLYDM" ></font>
+</DIV></td>
+	</tr>
+	
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">原毕业中学:</td>
+		<td><DIV originValue="安徽省桐城中学" elementtype="editfield"><font id="YBYZX" value="安徽省桐城中学">安徽省桐城中学</font>
+</DIV></td>
+		<td align="right" nowrap="true">中学所在班级:</td>
+		<td><DIV originValue="14" elementtype="editfield"><font id="ZXSZBJ" value="14">14</font>
+</DIV></td>
+		<td align="right" nowrap="true">中学班主任姓名:</td>
+		<td><DIV originValue="吴云海" elementtype="editfield"><font id="ZXBZRXM" value="吴云海">吴云海</font>
+</DIV></td>
+	</tr>
+
+
+	<tr>
+		<td colspan="6" class="class_caption"><label><strong>联系方式</strong></label></td>
+	</tr>
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">联系电话:</td>
+		<td><DIV originValue="15651918580" elementtype="editfield"><font id="LXDH" value="15651918580">15651918580</font>
+</DIV></td>
+		<td align="right" nowrap="true">手机号:</td>
+		<td><DIV originValue="15651918580" elementtype="editfield"><font id="SJH" value="15651918580">15651918580</font>
+</DIV></td>
+		<td align="right" nowrap="true">电子信箱:</td>
+		<td><DIV originValue="1948448114@qq.com" elementtype="editfield"><font id="DZXX" value="1948448114@qq.com">1948448114@qq.com</font>
+</DIV></td>
+	</tr>
+
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">个人主页:</td>
+		<td><DIV originValue="null" elementtype="editfield"><font id="GRZY" ></font>
+</DIV></td>
+		<td align="right" nowrap="true">QQ号:</td>
+		<td><DIV originValue="1948448114" elementtype="editfield"><font id="QQH" value="1948448114">1948448114</font>
+</DIV></td>
+		<td align="right" nowrap="true">MSN号:</td>
+		<td><DIV originValue="null" elementtype="editfield"><font id="MSNH" ></font>
+</DIV></td>
+	</tr>
+
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">通讯地址:</td>
+		<td><DIV originValue="安徽省桐城市范岗镇挂镇村金竹15号" elementtype="editfield"><font id="TXDZ" value="安徽省桐城市范岗镇挂镇村金竹15号">安徽省桐城市范岗镇挂镇村金竹15号</font>
+</DIV></td>
+		<td align="right" nowrap="true">通讯邮编:</td>
+		<td><DIV originValue="231461" elementtype="editfield"><font id="TXYB" value="231461">231461</font>
+</DIV></td>
+		<td align="right" nowrap="true">住宿信息:</td>
+		<td><DIV originValue="梅园四舍C-224" elementtype="editfield"><font id="ZSXX" value="梅园四舍C-224">梅园四舍C-224</font>
+</DIV></td>
+	</tr>
+
+	<tr>
+		<td colspan="6" class="class_caption"><label><strong>家庭信息</strong></label></td>
+	</tr>
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">家庭地址:</td>
+		<td colspan="3"><DIV originValue="安徽省桐城市范岗镇挂镇村金竹新屋" elementtype="editfield"><font id="JTDZ" value="安徽省桐城市范岗镇挂镇村金竹新屋">安徽省桐城市范岗镇挂镇村金竹新屋</font>
+</DIV></td>
+		<td align="right" nowrap="true">邮编:</td>
+		<td><DIV originValue="231461" elementtype="editfield"><font id="JTYB" value="231461">231461</font>
+</DIV></td>
+	</tr>
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">家庭电子信箱:</td>
+		<td colspan="3"><DIV originValue="null" elementtype="editfield"><font id="JTDZXX" ></font>
+</DIV></td>
+		<td align="right" nowrap="true">家庭电话:</td>
+		<td><DIV originValue="13862109727" elementtype="editfield"><font id="JTDH" value="13862109727">13862109727</font>
+</DIV></td>
+	</tr>
+    
+    <tr>
+		<td colspan="6" class="class_caption"><label><strong>其他</strong></label></td>
+	</tr>
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">特长:</td>
+		<td colspan="5"><DIV originValue="篮球" elementtype="editfield"><font id="TC" value="篮球">篮球</font>
+</DIV></td>
+	 
+	</tr>
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">爱好:</td>
+		<td colspan="5"><DIV originValue="篮球" elementtype="editfield"><font id="AH" value="篮球">篮球</font>
+</DIV></td>
+	 
+	</tr>
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">既往病史:</td>
+		<td colspan="5"><DIV originValue="无" elementtype="editfield"><font id="JWBS" value="无">无</font>
+</DIV></td>
+	 
+	</tr>
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">家族病史:</td>
+		<td colspan="5"><DIV originValue="无" elementtype="editfield"><font id="JZBS" value="无">无</font>
+</DIV></td>
+	 
+	</tr>
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">家族病史:</td>
+		<td colspan="5"><DIV originValue="无" elementtype="editfield"><font id="JZBS" value="无">无</font>
+</DIV></td>
+	 
+	</tr>
+	<tr class="tr_fld_v">
+		<td align="right" nowrap="true">备注:</td>
+		<td colspan="5"><DIV originValue="null" elementtype="editfield"><font id="BZ" ></font>
+</DIV></td>
+	 
+	</tr>
+	
+</table>
+
+
+	</FORM>
+<!-- End generate datagrid -->
+
+
+</body>
+</HTML>

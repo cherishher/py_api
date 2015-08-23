@@ -7,13 +7,8 @@ import json
 import traceback
 from BeautifulSoup import BeautifulSoup
 import xml.etree.ElementTree as ET
-from cache.JiangListCache import JiangListCache
 
-class jiang_listHandler(tornado.web.RequestHandler):
-    @property
-    def db(self):
-        return self.application.db
-        
+class zhu_listHandler(tornado.web.RequestHandler):
     def get(self):
         self.write('hello')
 
@@ -26,6 +21,7 @@ class jiang_listHandler(tornado.web.RequestHandler):
         login_url = 'http://my.seu.edu.cn/userPasswordValidate.portal'
         index_url = 'http://my.seu.edu.cn/index.portal'
         main_get_url = "http://xg.urp.seu.edu.cn/epstar/app/template.jsp?mainobj=SWMS/JXJSZ/T_JXJ_JXJZLB&tfile=XGMRMB/BGTAG_APPLY&filter=T_JXJ_JXJZLB:KTZT=1%20and%20SFKSQ=1%20and%20TO_CHAR(SYSDATE,%20'yyyy-MM-dd')%20between%20%20TO_CHAR(SQKSRQ,%20'yyyy-MM-dd')%20and%20TO_CHAR(SQJSRQ,%20'yyyy-MM-dd')%20and%20JXJZLBM%20in%20(select%20jxjzlbm%20from%20t_jxj_jxjzlb%20d%20where%20(select%20sum(a.slxd)%20from%20t_pub_e_detailnumlim%20a,t_jxj_jxjdjb%20b,t_xsjbxx_xsjbb%20c%20where%20a.slxdqbm=b.slxdqbm%20and%20b.jxjzlbm=d.jxjzlbm%20and%20a.jd=c.yxsh%20and%20c.xh='213131592'%20%20AND%20A.SLXD<>'-1'%20group%20by%20b.jxjzlbm)>0)%20OR%20jxjzlbm%20IN(SELECT%20f.jxjzlbm%20FROM%20T_JXJ_JXJDJB%20f%20WHERE%20f.jxjzlbm=jxjzlbm%20AND%20f.slxdqbm%20IS%20NULL%20AND%20KTZT%20=%201%20AND%20SFKSQ%20=%201%20AND%20TO_CHAR(SYSDATE,%20'yyyy-MM-dd')%20BETWEEN%20TO_CHAR(SQKSRQ,%20'yyyy-MM-dd')%20AND%20TO_CHAR(SQJSRQ,%20'yyyy-MM-dd'))"
+        main_get_url = "http://mynew.seu.edu.cn/alone.portal?.pen=sw.qgzx&.ia=false&.pmn=view"
         retjson = {'code':200, 'content':''}
         if not user or not password:
             retjson['code'] = 402
