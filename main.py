@@ -14,7 +14,7 @@ from mod.zhu_xue_query import zhu_queryHandler
 from mod.zhu_xue_list import zhu_listHandler
 # from mod.zzu_xue_apply import zhu_applyHandler
 
-from mod.db import engine
+from mod.cache.db import engine
 # from mod.user import User
 import tornado.web
 import tornado.ioloop

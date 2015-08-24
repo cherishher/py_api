@@ -12,21 +12,23 @@ class jiang_queryHandler(tornado.web.RequestHandler):
     @tornado.web.asynchronous
     @tornado.gen.engine
     def get(self):
-        user = self.get_argument('number',default=None)
-        password = self.get_argument('password',default=None)
-        print 'here'
-        login_url = "/checkPWD"
-        client = AsyncHTTPClient()
-        request = HTTPRequest(
-                                    login_url,
-                                    method='POST',
-                                    body = urllib.urlencode({'number':user,
-                                                            'password':password}),
-                                    request_timeout=7
-                                )
-        response = yield tornado.gen.Task(client.fetch, request)
-        self.write(response.body)
-        # self.write('hello')
+        # user = self.get_argument('number',default=None)
+        # password = self.get_argument('password',default=None)
+        # print 'here'
+        # login_url = "/checkPWD"
+        # client = AsyncHTTPClient()
+        # request = HTTPRequest(
+        #                             login_url,
+        #                             method='POST',
+        #                             body = urllib.urlencode({'number':user,
+        #                                                     'password':password}),
+        #                             request_timeout=7
+        #                         )
+        # response = yield tornado.gen.Task(client.fetch, request)
+        # self.write(response.body)
+        self.write('hello')
+        self.finish()
+
 
     @tornado.web.asynchronous
     @tornado.gen.engine
@@ -68,6 +70,7 @@ class jiang_queryHandler(tornado.web.RequestHandler):
                     retjson['content'] = 'time out'
                 else:
                     login_cookie = response.headers['Set-Cookie'].split(';')[0]
+                    print login_cookie
                     data = {
                         'mainobj':'SWMS/JXJSZ/T_JXJ_JXJXXB',
                         'tfile':'XGMRMB/BGTAG',
