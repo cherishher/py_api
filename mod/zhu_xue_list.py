@@ -69,6 +69,7 @@ class zhu_listHandler(tornado.web.RequestHandler):
         item = soup.findAll('td',{'nowrap':'true'})
         count = len(item)
         all_item = (count)/11
+        # this maybe 10 !!!!!!!
         if count<11:
             return ''
         else:
