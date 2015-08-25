@@ -7,28 +7,20 @@ import json
 import traceback
 from BeautifulSoup import BeautifulSoup
 import xml.etree.ElementTree as ET
+from cache.JiangQueryCache import JiangQueryCache 
+from sqlalchemy.orm.exc import NoResultFound
+from time import time
 
 class jiang_queryHandler(tornado.web.RequestHandler):
-    @tornado.web.asynchronous
-    @tornado.gen.engine
-    def get(self):
-        # user = self.get_argument('number',default=None)
-        # password = self.get_argument('password',default=None)
-        # print 'here'
-        # login_url = "/checkPWD"
-        # client = AsyncHTTPClient()
-        # request = HTTPRequest(
-        #                             login_url,
-        #                             method='POST',
-        #                             body = urllib.urlencode({'number':user,
-        #                                                     'password':password}),
-        #                             request_timeout=7
-        #                         )
-        # response = yield tornado.gen.Task(client.fetch, request)
-        # self.write(response.body)
-        self.write('hello')
-        self.finish()
+    @property
+    def db(self):
+        return self.application.db
+        
+    def on_finish(self):
+        self.db.close()
 
+    def get(self):
+        self.write('hello')
 
     @tornado.web.asynchronous
     @tornado.gen.engine
@@ -36,6 +28,20 @@ class jiang_queryHandler(tornado.web.RequestHandler):
         user = self.get_argument('number',default=None)
         password = self.get_argument('password',default=None)
 
+        # read from cache
+        try:
+            status = self.db.query(JiangQueryCache).filter(JiangQueryCache.number == user).one()
+            if status.date > int(time())-40000 and status.text != '*':
+                self.write(status.text)
+                self.finish()
+                return
+        except NoResultFound:
+            status = JiangQueryCache(number = user,text = '*',date = int(time()))
+            self.db.add(status)
+            try:
+                self.db.commit()
+            except:
+                self.db.rollback()
 
         login_url = 'http://my.seu.edu.cn/userPasswordValidate.portal'
         index_url = 'http://my.seu.edu.cn/index.portal'
@@ -46,109 +52,117 @@ class jiang_queryHandler(tornado.web.RequestHandler):
         main_get_url = "http://xg.urp.seu.edu.cn/epstar/app/template.jsp?mainobj=SWMS/JXJSZ/T_JXJ_JXJXXB&tfile=XGMRMB/BGTAG_GAIN&filter=T_JXJ_JXJXXB:SHZT=99&page=T_JXJ_JXJXXB:curpage=1,pagesize=20&applycustom=yes&orderby=T_JXJ_JXJXXB:SQRQ%20desc"
         xml_url = "http://xg.urp.seu.edu.cn/epstar/app/getxml.jsp?"
         retjson = {'code':200, 'content':'',"content_get":'',"content_apply":''}
-        if not user or not password:
-            retjson['code'] = 402
-            retjson['content'] = 'params lack'
-        else:
-            try:
-                client = AsyncHTTPClient()
-                login_value = {
-                    'Login.Token1':user,
-                    'Login.Token2':password,
-                    'goto':'http://my.seu.edu.cn/loginSuccess.portal',
-                    'gotoOnFail':'http://my.seu.edu.cn/loginFailure.portal'
+        
+        try:
+            client = AsyncHTTPClient()
+            login_value = {
+                'Login.Token1':user,
+                'Login.Token2':password,
+                'goto':'http://my.seu.edu.cn/loginSuccess.portal',
+                'gotoOnFail':'http://my.seu.edu.cn/loginFailure.portal'
+            }
+            request = HTTPRequest(
+                                login_url,
+                                method='POST',
+                                body = urllib.urlencode(login_value),
+                                request_timeout=7
+                            )
+            response = yield tornado.gen.Task(client.fetch, request)
+            if not response.headers:
+                retjson['code'] = 408
+                retjson['content'] = 'time out'
+            else:
+                login_cookie = response.headers['Set-Cookie'].split(';')[0]
+                data = {
+                    'mainobj':'SWMS/JXJSZ/T_JXJ_JXJXXB',
+                    'tfile':'XGMRMB/BGTAG',
+                    'filter':'T_JXJ_JXJXXB:SFTM=0 and SFPGTM=0 and SHZT!=99',
+                    'page':'T_JXJ_JXJXXB:curpage=1,pagesize=20',
+                    'applycustom':'yes',
+                    'orderby':'T_JXJ_JXJXXB:SQRQ desc'
                 }
-                request = HTTPRequest(
-                                    login_url,
-                                    method='POST',
-                                    body = urllib.urlencode(login_value),
-                                    request_timeout=7
-                                )
-                response = yield tornado.gen.Task(client.fetch, request)
-                if not response.headers:
-                    retjson['code'] = 408
-                    retjson['content'] = 'time out'
-                else:
-                    login_cookie = response.headers['Set-Cookie'].split(';')[0]
-                    print login_cookie
+                request_apply = HTTPRequest(
+                                    main_apply_url,
+                                    method = 'GET',
+                                    headers={'Cookie':login_cookie,
+                                             'Referer':'http://xg.urp.seu.edu.cn/epstar/app/template.jsp?mainobj=SWMS/JXJSQ/T_JXJ_JXJXXB&tfile=XGMRMB/KJ&current.model.id=4si1f2d-20s3t1-f3cdywsn-1-f3cld7o9-7'},
+                                    request_timeout=7)
+                request_get = HTTPRequest(
+                                    main_get_url,
+                                    method = 'GET',
+                                    headers={'Cookie':login_cookie,
+                                             'Referer':'http://xg.urp.seu.edu.cn/epstar/app/template.jsp?mainobj=SWMS/JXJSQ/T_JXJ_JXJXXB&tfile=XGMRMB/KJ&current.model.id=4si1f2d-20s3t1-f3cdywsn-1-f3cld7o9-7'},
+                                    request_timeout=7)
+                response1,response2 = yield [client.fetch(request_apply),client.fetch(request_get)]
+                retjson['content_apply'] = self.deal_apply(response1.body)
+                retjson['content_get'] = self.deal_get(response2.body)
+
+                length1 = len(retjson['content_apply'])
+                length2 = len(retjson['content_get'])
+                data_all = []
+                request_all = []
+                for i in range(length1):
                     data = {
-                        'mainobj':'SWMS/JXJSZ/T_JXJ_JXJXXB',
-                        'tfile':'XGMRMB/BGTAG',
-                        'filter':'T_JXJ_JXJXXB:SFTM=0 and SFPGTM=0 and SHZT!=99',
-                        'page':'T_JXJ_JXJXXB:curpage=1,pagesize=20',
-                        'applycustom':'yes',
-                        'orderby':'T_JXJ_JXJXXB:SQRQ desc'
+                    'mainobj':'SWMS/JXJGLZXT/JXJSQ/T_JXJ_JXJZLB',
+                    'Fields':'T_JXJ_JXJZLB:JXJMC,WID',
+                    'Filter':"T_JXJ_JXJZLB: JXJZLBM = '"+retjson['content_apply'][i]['name']+"'",
+                    'OrderBy':'T_JXJ_JXJZLB:',
+                    'CheckFP':'no'
                     }
-                    request_apply = HTTPRequest(
-                                        main_apply_url,
-                                        method = 'GET',
-                                        headers={'Cookie':login_cookie,
-                                                 'Referer':'http://xg.urp.seu.edu.cn/epstar/app/template.jsp?mainobj=SWMS/JXJSQ/T_JXJ_JXJXXB&tfile=XGMRMB/KJ&current.model.id=4si1f2d-20s3t1-f3cdywsn-1-f3cld7o9-7'},
-                                        request_timeout=7)
-                    request_get = HTTPRequest(
-                                        main_get_url,
-                                        method = 'GET',
-                                        headers={'Cookie':login_cookie,
-                                                 'Referer':'http://xg.urp.seu.edu.cn/epstar/app/template.jsp?mainobj=SWMS/JXJSQ/T_JXJ_JXJXXB&tfile=XGMRMB/KJ&current.model.id=4si1f2d-20s3t1-f3cdywsn-1-f3cld7o9-7'},
-                                        request_timeout=7)
-                    response1,response2 = yield [client.fetch(request_apply),client.fetch(request_get)]
-                    retjson['content_apply'] = self.deal_apply(response1.body)
-                    retjson['content_get'] = self.deal_get(response2.body)
+                    data_all.append(data)
+                    request = HTTPRequest(
+                                            xml_url,
+                                            method = 'POST',
+                                            body = urllib.urlencode(data),
+                                            headers={'Cookie':login_cookie},
+                                            request_timeout=8)
+                    request_all.append(request)
+                for i in range(length2):
+                    data = {
+                    'mainobj':'SWMS/JXJGLZXT/JXJSQ/T_JXJ_JXJZLB',
+                    'Fields':'T_JXJ_JXJZLB:JXJMC,WID',
+                    'Filter':"T_JXJ_JXJZLB: JXJZLBM = '"+retjson['content_get'][i]['name']+"'",
+                    'OrderBy':'T_JXJ_JXJZLB:',
+                    'CheckFP':'no'
+                    }
+                    data_all.append(data)
+                    request = HTTPRequest(
+                                            xml_url,
+                                            method = 'POST',
+                                            body = urllib.urlencode(data),
+                                            headers={'Cookie':login_cookie},
+                                            request_timeout=8)
+                    request_all.append(request)
 
-                    length1 = len(retjson['content_apply'])
-                    length2 = len(retjson['content_get'])
-                    data_all = []
-                    request_all = []
-                    for i in range(length1):
-                        data = {
-                        'mainobj':'SWMS/JXJGLZXT/JXJSQ/T_JXJ_JXJZLB',
-                        'Fields':'T_JXJ_JXJZLB:JXJMC,WID',
-                        'Filter':"T_JXJ_JXJZLB: JXJZLBM = '"+retjson['content_apply'][i]['name']+"'",
-                        'OrderBy':'T_JXJ_JXJZLB:',
-                        'CheckFP':'no'
-                        }
-                        data_all.append(data)
-                        request = HTTPRequest(
-                                                xml_url,
-                                                method = 'POST',
-                                                body = urllib.urlencode(data),
-                                                headers={'Cookie':login_cookie},
-                                                request_timeout=8)
-                        request_all.append(request)
-                    for i in range(length2):
-                        data = {
-                        'mainobj':'SWMS/JXJGLZXT/JXJSQ/T_JXJ_JXJZLB',
-                        'Fields':'T_JXJ_JXJZLB:JXJMC,WID',
-                        'Filter':"T_JXJ_JXJZLB: JXJZLBM = '"+retjson['content_get'][i]['name']+"'",
-                        'OrderBy':'T_JXJ_JXJZLB:',
-                        'CheckFP':'no'
-                        }
-                        data_all.append(data)
-                        request = HTTPRequest(
-                                                xml_url,
-                                                method = 'POST',
-                                                body = urllib.urlencode(data),
-                                                headers={'Cookie':login_cookie},
-                                                request_timeout=8)
-                        request_all.append(request)
-
-                    response = yield [client.fetch(i) for i in request_all]
-                    print len(response)
-                    for i in range(length1):
-                        tree = ET.fromstring(response[i].body)
-                        retjson['content_apply'][i]['name']=tree[0][0].text
-                    for i in range(length2):
-                        tree = ET.fromstring(response[i+length1].body)
-                        retjson['content_get'][i]['name']=tree[0][0].text
+                response = yield [client.fetch(i) for i in request_all]
+                for i in range(length1):
+                    tree = ET.fromstring(response[i].body)
+                    retjson['content_apply'][i]['name']=tree[0][0].text
+                for i in range(length2):
+                    tree = ET.fromstring(response[i+length1].body)
+                    retjson['content_get'][i]['name']=tree[0][0].text
                     
-            except Exception,e:
-                print traceback.format_exc()
-                print str(e)
-                retjson['code'] = 500
-                retjson['content'] = 'system error'
-                pass
-        self.write(json.dumps(retjson, ensure_ascii=False, indent=2))
+        except Exception,e:
+            # print traceback.format_exc()
+            # print str(e)
+            with open('api_error.log','a+') as f:
+                f.write(strftime('%Y%m%d %H:%M:%S in [api]', localtime(time()))+'\n'+str(str(e)+'\n[jiang_query]\t'+str(user)+'\nString:'+str(retjson)+'\n\n'))
+            retjson['code'] = 500
+            retjson['content'] = 'system error'
+        ret = json.dumps(retjson, ensure_ascii=False, indent=2)
+        self.write(ret)
         self.finish()
+
+        # refresh cache
+        if retjson['code'] == 200:
+            status.date = int(time())
+            status.text = ret
+            self.db.add(status)
+            try:
+                self.db.commit()
+            except Exception,e:
+                self.db.rollback()
+
     def deal_apply(self,content):
         soup = BeautifulSoup(content)
         item = soup.findAll('td',{'nowrap':'true'})

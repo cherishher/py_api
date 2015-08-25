@@ -9,6 +9,13 @@ from BeautifulSoup import BeautifulSoup
 import xml.etree.ElementTree as ET
 
 class zhu_listHandler(tornado.web.RequestHandler):
+    @property
+    def db(self):
+        return self.application.db
+        
+    def on_finish(self):
+        self.db.close()
+
     def get(self):
         self.write('hello')
 
