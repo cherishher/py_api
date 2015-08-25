@@ -9,23 +9,15 @@ from BeautifulSoup import BeautifulSoup
 import xml.etree.ElementTree as ET
 
 class zhu_queryHandler(tornado.web.RequestHandler):
-    @tornado.web.asynchronous
-    @tornado.gen.engine
+    @property
+    def db(self):
+        return self.application.db
+        
+    def on_finish(self):
+        self.db.close()
+
     def get(self):
-        user = self.get_argument('number',default=None)
-        password = self.get_argument('password',default=None)
-        login_url = "/checkPWD"
-        client = AsyncHTTPClient()
-        request = HTTPRequest(
-                                    login_url,
-                                    method='POST',
-                                    body = urllib.urlencode({'number':user,
-                                                            'password':password}),
-                                    request_timeout=7
-                                )
-        response = yield tornado.gen.Task(client.fetch, request)
-        self.write(response.body)
-        # self.write('hello')
+        self.write('hello')
 
     @tornado.web.asynchronous
     @tornado.gen.engine
