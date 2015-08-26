@@ -11,6 +11,7 @@ from cache.JiangQueryCache import JiangQueryCache
 from sqlalchemy.orm.exc import NoResultFound
 from time import localtime, strftime, time
 
+
 class jiang_queryHandler(tornado.web.RequestHandler):
     @property
     def db(self):
