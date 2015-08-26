@@ -34,7 +34,7 @@ nosetests.xml
 .project
 .pydevproject
 
-/mod/cache/db.py
+mod/cache/db.py
 
 # IDEA
 *.idea
