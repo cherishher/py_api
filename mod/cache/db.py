@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 DB_HOST = '127.0.0.1'
 DB_USER = 'root'
-DB_PWD = '084358'
+DB_PWD = '08435g'
 #084358
 DB_NAME = 'api'
 
