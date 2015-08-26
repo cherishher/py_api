@@ -9,7 +9,7 @@ from BeautifulSoup import BeautifulSoup
 import xml.etree.ElementTree as ET
 from cache.JiangQueryCache import JiangQueryCache 
 from sqlalchemy.orm.exc import NoResultFound
-from time import time
+from time import time,localtime,strftime
 
 class jiang_queryHandler(tornado.web.RequestHandler):
     @property
