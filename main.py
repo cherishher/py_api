@@ -2,8 +2,8 @@
 #@date  :2015-3-from
 
 from sqlalchemy.orm import scoped_session, sessionmaker
-from mod.testHandler import testHandler
-from mod.checkPWD import checkPwdHandler
+from mod.auth import checkPwdHandler
+
 from mod.jiang_xue_query import jiang_queryHandler
 from mod.jiang_xue_apply import jiang_applyHandler
 from mod.jiang_xue_list import jiang_listHandler
@@ -34,7 +34,6 @@ class Application(tornado.web.Application):
 
     def __init__(self):
         handlers = [
-             (r'/api/test',testHandler),
              (r'/api/checkPWD',checkPwdHandler),
              (r'/api/jiang_query',jiang_queryHandler),
              (r'/api/jiang_list',jiang_listHandler),
