@@ -363,3 +363,18 @@ cannot concatenate 'str' and 'dict' objects
 [jiang_list]	213141714
 String:{'content': '', 'code': 200}
 
+20170402 22:22:07 in [api]
+'onclick'
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170402 22:22:35 in [api]
+'onclick'
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170402 22:24:22 in [api]
+HTTP 400: Bad Request
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+

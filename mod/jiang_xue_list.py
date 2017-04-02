@@ -78,15 +78,6 @@ class jiang_listHandler(tornado.web.RequestHandler):
                 if not body:
                     retjson['code'] = 408
                     retjson['content'] = 'time out'
-                param = {'.p':BeautifulSoup(body).find('li',attrs={'id':'one3'})['onclick'].split("'")[1].split("=")[1]}
-                url = '%s?.p='
-                request = HTTPRequest(
-                    main_get_url+'?.p='+param,
-                    method = 'GET',
-                    headers={'Cookie':cookie},
-                    request_timeout=15)
-                response = yield client.fetch(request)
-                print response
                 retjson['content'] = self.getJiangInfo(body)
         except Exception,e:
             # print traceback.format_exc()
