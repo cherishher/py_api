@@ -1,0 +1,345 @@
+20160705 23:52:06 in [api]
+'NoneType' object has no attribute '__getitem__'
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160705 23:52:16 in [api]
+'NoneType' object has no attribute '__getitem__'
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160705 23:55:19 in [api]
+'NoneType' object has no attribute '__getitem__'
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160706 00:05:14 in [api]
+'NoneType' object has no attribute '__getitem__'
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160706 00:06:07 in [api]
+'NoneType' object has no attribute '__getitem__'
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160706 00:06:27 in [api]
+'NoneType' object has no attribute '__getitem__'
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160706 00:06:58 in [api]
+'NoneType' object has no attribute '__getitem__'
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160706 00:13:09 in [api]
+'NoneType' object has no attribute '__getitem__'
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160706 00:14:21 in [api]
+'NoneType' object has no attribute '__getitem__'
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160706 00:21:32 in [api]
+'NoneType' object has no attribute '__getitem__'
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160706 00:22:56 in [api]
+'NoneType' object has no attribute '__getitem__'
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160706 00:28:28 in [api]
+'NoneType' object has no attribute '__getitem__'
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160706 00:30:59 in [api]
+'NoneType' object is not callable
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160706 22:16:02 in [api]
+'NoneType' object is not callable
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160706 22:16:08 in [api]
+'NoneType' object is not callable
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160706 22:16:54 in [api]
+'NoneType' object is not callable
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160706 22:18:29 in [api]
+'NoneType' object is not callable
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160801 23:27:11 in [api]
+'NoneType' object is not callable
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160801 23:29:39 in [api]
+'NoneType' object is not callable
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160801 23:34:13 in [api]
+'NoneType' object is not callable
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160801 23:36:42 in [api]
+'NoneType' object is not callable
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160801 23:44:30 in [api]
+'NoneType' object is not callable
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160801 23:45:57 in [api]
+'NoneType' object is not callable
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160801 23:46:18 in [api]
+'NoneType' object is not callable
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160801 23:46:35 in [api]
+'NoneType' object is not callable
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160801 23:47:12 in [api]
+'NoneType' object is not callable
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160801 23:47:35 in [api]
+'NoneType' object is not callable
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160801 23:48:06 in [api]
+'NoneType' object is not callable
+[jiang_query]	213141714
+String:{'content': '', 'code': 200}
+
+20160802 00:19:16 in [api]
+HTTP 599: Timeout
+[jiang_list]213141678
+String:{'content': '', 'code': 200}
+
+20160802 00:21:04 in [api]
+global name 'getCookie' is not defined
+[jiang_query]	213141678
+String:{'content': '', 'code': 200}
+
+20160802 00:21:06 in [api]
+global name 'getCookie' is not defined
+[jiang_query]	213141678
+String:{'content': '', 'code': 200}
+
+20160802 00:21:39 in [api]
+global name 'getCookie' is not defined
+[jiang_query]	213141678
+String:{'content': '', 'code': 200}
+
+20160802 00:23:02 in [api]
+global name 'getCookie' is not defined
+[jiang_query]	213141678
+String:{'content': '', 'code': 200}
+
+20160802 00:24:59 in [api]
+global name 'getCookie' is not defined
+[jiang_query]	213141678
+String:{'content': '', 'code': 200}
+
+20160802 00:25:01 in [api]
+global name 'getCookie' is not defined
+[jiang_query]	213141678
+String:{'content': '', 'code': 200}
+
+20170224 18:35:35 in [api]
+Unsupported url scheme: 127.0.0.1:8000/api/checkPWD
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170224 18:36:24 in [api]
+Unsupported url scheme: 127.0.0.1:8000/api/checkPWD
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170224 18:36:47 in [api]
+HTTPResponse(_body=None,buffer=<_io.BytesIO object at 0x00000000041DB888>,code=200,effective_url='http://127.0.0.1:8000/api/checkPWD',error=None,headers=<tornado.httputil.HTTPHeaders object at 0x000000000415A780>,reason='OK',request=<tornado.httpclient.HTTPRequest object at 0x000000000415A390>,request_time=0.03800010681152344,time_info={}) is not JSON serializable
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170224 18:37:46 in [api]
+'HTTPResponse' object has no attribute '__getitem__'
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170224 18:38:11 in [api]
+string indices must be integers, not str
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170224 18:52:54 in [api]
+HTTP 599: Timeout
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170227 21:20:48 in [api]
+'str' object has no attribute 'text'
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170227 21:21:05 in [api]
+'str' object has no attribute 'text'
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170227 21:21:59 in [api]
+'str' object has no attribute 'text'
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170227 21:22:21 in [api]
+'str' object has no attribute 'text'
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170227 21:23:04 in [api]
+'str' object has no attribute 'text'
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170227 21:23:36 in [api]
+'str' object has no attribute 'text'
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170227 21:25:35 in [api]
+'str' object has no attribute 'text'
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170227 21:26:11 in [api]
+'str' object has no attribute 'text'
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170227 21:31:05 in [api]
+'str' object has no attribute 'text'
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170227 21:31:35 in [api]
+'str' object has no attribute 'text'
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170227 21:36:54 in [api]
+'str' object has no attribute 'text'
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170227 21:41:11 in [api]
+'str' object has no attribute 'text'
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170227 21:43:15 in [api]
+'str' object has no attribute 'text'
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170227 21:45:16 in [api]
+'str' object has no attribute 'text'
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170227 21:47:22 in [api]
+'str' object has no attribute 'text'
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170227 21:47:39 in [api]
+Expected bytes, unicode, or None; got <type 'dict'>
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170227 21:47:52 in [api]
+Expected bytes, unicode, or None; got <type 'dict'>
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170227 21:48:23 in [api]
+Body must be None for method GET (unless allow_nonstandard_methods is true)
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170227 22:02:56 in [api]
+Body must be None for method GET (unless allow_nonstandard_methods is true)
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170228 10:51:42 in [api]
+'onclick'
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170228 10:52:59 in [api]
+'onclick'
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170228 10:57:12 in [api]
+'onclick'
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170228 10:57:50 in [api]
+'onclick'
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170228 11:00:11 in [api]
+'NoneType' object is not callable
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170228 11:00:50 in [api]
+'NoneType' object is not callable
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170228 11:02:14 in [api]
+'NoneType' object is not callable
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170228 11:08:43 in [api]
+'str' object has no attribute 'text'
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+
+20170228 11:13:24 in [api]
+'unicode' object has no attribute 'lrstrip'
+[jiang_list]	213141714
+String:{'content': '', 'code': 200}
+

@@ -20,7 +20,7 @@ class jiang_applyHandler(tornado.web.RequestHandler):
         par = self.get_argument('par',default=None)
         login_url = 'http://my.seu.edu.cn/userPasswordValidate.portal'
         form_url = 'http://xg.urp.seu.edu.cn/epstar/app/template.jsp?mainobj=SWMS/JXJGLZXT/JXJSQ/T_JXJ_JXJXXB&tfile=XGMRMB/BDTAG&filter=T_JXJ_JXJXXB:1=2&opr=new&jxjzlbm=2552&sffdj=0&sfadjsq=0'
-        post_yrl = 'http://xg.urp.seu.edu.cn/epstar/app/putxml.jsp?WebMethod=PutXml'
+        post_url = 'http://xg.urp.seu.edu.cn/epstar/app/putxml.jsp?WebMethod=PutXml'
         retjson = {'code':200, 'content':''}
         if not user or not password:
             retjson['code'] = 402
@@ -47,7 +47,6 @@ class jiang_applyHandler(tornado.web.RequestHandler):
                 else:
                     login_cookie = response.headers['Set-Cookie'].split(';')[0]
 
-                    
                     # par['context'] = 
                     data = getXML(par)
                     request = HTTPRequest(
