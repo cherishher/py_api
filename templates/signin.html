@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+    <title>signin</title>
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/signin.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!--引入jquery-->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript">
+    function check() {
+        //console.info("点击了登录");
+        var userName = $("#inputIdNum").val();
+        console.info(userName)
+        var userPass = $("#inputPassword").val();
+        console.info(userPass);
+        if (userName == "" || userName == null) {
+            alert("用户名不能为空");
+            return false;
+        } else if (userPass == "" || userPass == null) {
+            alert("密码不能为空");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    function sendInfo() {
+        //if (check() == true) {
+            check();
+            console.log("q");
+            loadXMLDoc();
+            function loadXMLDoc() {
+                console.log("llll");
+                var xmlhttp;
+                if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+                } else { // code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmlhttp.onreadystatechange = function() {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        document.getElementById("wrong").innerHTML = xmlhttp.responseText;
+                    }
+                }
+                xmlhttp.open("POST", "/api/check/PWD", true);
+                xmlhttp.setRequestHeader("Content-type", "application/signin");
+                xmlhttp.send("userName"+userName+"userPass"+userPass);
+            }
+
+       // }
+
+    }
+    </script>
+    <script type="text/javascript">
+    </script>
+</head>
+
+<body>
+    <div class="header">
+        <div class="logoimg">
+            <img src="img/logo.png" alt="东南大学" width="80">
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="logotxt">
+                        <h1>东南大学</h1>
+                    </div>
+                    <h2 class="site-name text-center">学生事务管理</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <form class="form-signin">
+            <h2 class="form-signin-heading">登陆</h2>
+            <label for="inputIdNum" class="sr-only">一卡通号</label>
+            <input type="idNum" id="inputIdNum" class="form-control" placeholder="一卡通号" required autofocus>
+            <label for="inputPassword" class="sr-only">密码</label>
+            <input type="password" id="inputPassword" class="form-control" placeholder="统一身份认证密码" required>
+            <div class="wrong">
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" id="signin-but" type="submit" onclick="sendInfo()">登陆</button>
+        </form>
+    </div>
+</body>
+
+</html>

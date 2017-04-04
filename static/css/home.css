@@ -1,0 +1,44 @@
+
+.header {
+    background: #336699;
+    padding: 20px 0 20px;
+    text-align: center;
+    min-height: 100px;
+    position: relative;
+}
+
+.logoimg {
+    position: absolute;
+    left: 1%;
+    right: 1%;
+    bottom: -40px;
+}
+
+.logotxt {
+    margin-bottom: 10px;
+    border: 0;
+    color: #fff;
+}
+
+.header h2 {
+    color: #fff;
+    padding: 0;
+    margin: 0 0 35px;
+    font-size: 24px
+}
+
+.fun {
+    text-align: center;
+}
+
+.fun>img {
+    width: 65px;
+}
+
+.panel {
+    margin: 20px 10px;
+}
+
+.txt {
+    font-size: 9px;
+}

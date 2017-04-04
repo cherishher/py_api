@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN" ng-app='yjxjApp'>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+    <title>shengqjxj page</title>
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/allfun.css" rel="stylesheet">
+    <script src="http://lib.sinaapp.com/js/angular.js/angular-1.2.19/angular.min.js"></script>
+</head>
+
+<body ng-controller="JxjController">
+    <div class="header navbar-fixed-top">
+        <div class="backimg">
+            <a><img src="img/back.png" alt="返回" width="50"></a>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="funtxt">
+                        已申请奖学金
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="white">. </div>
+    <div ng-repeat="item in items">
+        <div class="col-xs-12 col-md-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span>{{item.title}}</span></h3>
+                </div>
+                <div class="panel-body">
+                    <div><span class="state">奖学金级别：</span><span>{{item.level}}</span></div>
+                    <div><span class="state">评定学年：</span><span>{{item.year}}</span></div>
+                    <div><span class="state">金额：</span><span></span>{{item.money}}</div>
+                    <div><span class="state">审核状态：</span><span>{{item.state}}</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="white">. </div>
+    <ul class="nav nav-tabs nav-tabs-justified navbar-fixed-bottom">
+        <div class="row" align="center">
+            <div class="col-md-4 col-sm-4 col-xs-4 tablock" align="center">
+                <li><a href="#" class="tabtxt">可申请</a></li>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4 tablock inthis" align="center">
+                <li>
+                    <div>已申请</div>
+                </li>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4 tablock" align="center">
+                <li><a href="#" class="tabtxt">一览表</a></li>
+            </div>
+        </div>
+    </ul>
+</body>
+<script>
+var yjxjAppModule = angular.module('yjxjApp',[]);
+yjxjAppModule.controller('JxjController',
+function($scope) {
+    $scope.items = [{
+        title: "1奖学金",
+        level: "不分",
+        year: "2007",
+        money: "200",
+        state: "已审核"
+    }, {
+        title: "1奖学金",
+        level: "不分",
+        year: "2007",
+        money: "200",
+        state: "已审核"
+    }, {
+        title: "1奖学金",
+        level: "不分",
+        year: "2007",
+        money: "200",
+        state: "已审核"
+    }, {
+        title: "1奖学金",
+        level: "不分",
+        year: "2007",
+        money: "200",
+        state: "已审核"
+    }
+    ];
+});
+</script>
+
+</html>

@@ -1,0 +1,51 @@
+
+.header {
+    background: #336699;
+    padding: 12px 0 12px;
+    text-align: center;
+    min-height: 15px;
+}
+
+.backimg {
+    position: absolute;
+    left: 1%;
+    top: -3px;
+}
+
+.white {
+    min-height: 65px;
+}
+
+.funtxt {
+    color: white;
+    font-size: 15px;
+}
+
+.state {
+    font-size: 13px;
+    color: #336699;
+}
+
+.nav-tabs {
+    text-align: center;
+    height: 40px;
+    line-height: 45px;
+    background: #336699;
+}
+
+.tabtxt {
+    color: white;
+    font-size: 15px;
+}
+
+.inthis {
+    color: #99CCFF;
+    font-size: 20px;
+}
+
+a:hover,
+a:focus {
+    text-decoration: none;
+}
+
+
