@@ -46,94 +46,153 @@
             <input type="idNum" id="inputIdNum" class="form-control" placeholder="一卡通号" required autofocus>
             <label for="inputPassword" class="sr-only">密码</label>
             <input type="password" id="inputPassword" class="form-control" placeholder="统一身份认证密码" required>
-            <div class="wrong">
+            <div id="wrong">
             </div>
             <button class="btn btn-lg btn-primary btn-block" id="signin-but">登陆</button>
         </form>
     </div>
 </body>
- <script type=" text/javascript ">
-    // var check = function() {
-    //     //console.info("点击了登录 ");
-    //     var userName = $("#inputIdNum ").val();
-    //     console.info(userName)
-    //     var userPass = $("#inputPassword ").val();
-    //     console.info(userPass);
-    //     if (userName == " " || userName == null) {
-    //         alert("用户名不能为空 ");
-    //         return false;
-    //     } else if (userPass == " " || userPass == null) {
-    //         alert("密码不能为空 ");
-    //         return false;
-    //     } else {
-    //         return true;
-    //     }
-    // }
-    // var loadXMLDoc = function() {
-    //         console.log("llll ");
-    //         var userName = $("#inputIdNum ").val();
-    //         console.info(userName)
-    //         var userPass = $("#inputPassword ").val();
-    //         console.info(userPass);
+<script type=" text/javascript ">
+// var check = function() {
+//     //console.info("点击了登录 ");
+//     var userName = $("#inputIdNum ").val();
+//     console.info(userName)
+//     var userPass = $("#inputPassword ").val();
+//     console.info(userPass);
+//     if (userName == " " || userName == null) {
+//         alert("用户名不能为空 ");
+//         return false;
+//     } else if (userPass == " " || userPass == null) {
+//         alert("密码不能为空 ");
+//         return false;
+//     } else {
+//         return true;
+//     }
+// }
+// var loadXMLDoc = function() {
+//         console.log("llll ");
+//         var userName = $("#inputIdNum ").val();
+//         console.info(userName)
+//         var userPass = $("#inputPassword ").val();
+//         console.info(userPass);
 
-    //         var xmlhttp;
-    //         if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
-    //             xmlhttp = new XMLHttpRequest();
-    //         } else { // code for IE6, IE5
-    //             xmlhttp = new ActiveXObject("Microsoft.XMLHTTP ");
-    //         }
-    //         xmlhttp.onreadystatechange = function() {
-    //             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-    //                 //处理json数据
-    //                 for (var i = 0; i < data.length; i++) {
-    //                     var item = data[i];
-    //                     var data = JSON.parse(xmlhttp.responseText);
-    //                     //如果有错显示出错信息
-    //                     document.getElementById("wrong ").innerHTML = "hahahhah ";
-    //                     //////////
-    //                     //如果正确进行跳转
-    //                     // window.location.href = 'file:///Users/donger/Documents/%E5%A5%96%E5%8A%A9%E5%AD%A6%E9%87%91/home.html#'
-    //                 }
-    //             }
-    //         }
-    //         xmlhttp.open("POST ", "223.3.67.68:8000/api/checkPWD ", true);
-    //         //xmlhttp.setRequestHeader("Content-type ", "application/signin ");
-    //         xmlhttp.send("number " + userName + "password " + userPass);
-    //         return true;
-    //     }
+//         var xmlhttp;
+//         if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
+//             xmlhttp = new XMLHttpRequest();
+//         } else { // code for IE6, IE5
+//             xmlhttp = new ActiveXObject("Microsoft.XMLHTTP ");
+//         }
+//         xmlhttp.onreadystatechange = function() {
+//             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+//                 //处理json数据
+//                 for (var i = 0; i < data.length; i++) {
+//                     var item = data[i];
+//                     var data = JSON.parse(xmlhttp.responseText);
+//                     //如果有错显示出错信息
+//                     document.getElementById("wrong ").innerHTML = "hahahhah ";
+//                     //////////
+//                     //如果正确进行跳转
+//                     // window.location.href = 'file:///Users/donger/Documents/%E5%A5%96%E5%8A%A9%E5%AD%A6%E9%87%91/home.html#'
+//                 }
+//             }
+//         }
+//         xmlhttp.open("POST ", "223.3.67.68:8000/api/checkPWD ", true);
+//         //xmlhttp.setRequestHeader("Content-type ", "application/signin ");
+//         xmlhttp.send("number " + userName + "password " + userPass);
+//         return true;
+//     }
 
-$(document).ready(function(){
-    $("#signin-but ").click(function(){
-          var userName = $("#inputIdNum ").val();
-            console.info(userName);
-            var userPass = $("#inputPassword ").val();
-            console.info(userPass);
-        $.post("http://223.3.67.68:8000/api/checkPWD ",{
-           number: userName,
+
+function check(uName, pword) {
+    // alert(uName+". "+pword);
+    console.info("点击了登录 ");
+    if (uName == "" || uName == null) {
+        document.getElementById("wrong").innerHTML = "用户名不能为空 ";
+        return false;
+    } else if (pword == "" || pword == null) {
+        document.getElementById("wrong").innerHTML = "密码不能为空 ";
+        return false;
+    } else if (checkID(uName) == false) {
+        document.getElementById("wrong").innerHTML = "请输入正确的一卡通号";
+        return false;
+    } else if (checkPwd(pword) == false) {
+        document.getElementById("wrong").innerHTML = "密码有误";
+        return false;
+    } else {
+        return true;
+    }
+
+}
+
+
+var checkID = function(id) {
+    var patt = /^2131\d\d\d\d\d$/;
+    if (patt.test(id)) {
+        //alert("true");
+        return true;
+    } else
+        return false;
+}
+
+var checkPwd = function(pword) {
+    if (pword.length < 6)
+        return false;
+    else
+        return true;
+
+}
+
+$(document).ready(function() {
+    $("#signin-but ").click(function() {
+        var userName = $("#inputIdNum ").val();
+        console.info(userName);
+        var userPass = $("#inputPassword ").val();
+        console.info(userPass);
+        if (check(userName, userPass) == false) {
+            document.getElementById("inputIdNum").value = "";
+            document.getElementById("inputPassword").value = "";
+        } else {
+            $.post("http://223.3.67.68:8000/api/checkPWD ", {
+                    number: userName,
                     password: userPass
-        },
-        function(data,status){
-            alert("数据: \n " + data + "\n状态: " + status);
-        });
+                },
+                function(data, status) {
+                    // alert("数据: \n " + data + "\n状态: " + status);
+                    var info = jQuery.parseJSON(data);
+                    if (info.code == 200) {
+                        window.location.href = "file:///Users/donger/Documents/%E5%A5%96%E5%8A%A9%E5%AD%A6%E9%87%91/py_api/templates/home.html"
+                    }else if(info.code == 500){
+                        document.getElementById("wrong").innerHTML = "请去信息门户登陆";
+                    } 
+                    else {
+                        //alert(info.content);
+                        document.getElementById("wrong").innerHTML = info.content;
+                    }
+                });
+        }
     });
+
+
+
 });
 
 
-        // function sendInfo() {
-        //     var userName = $("#inputIdNum ").val();
-        //     console.info(userName);
-        //     var userPass = $("#inputPassword ").val();
-        //     console.info(userPass);
-        //     // if (check() == true)
-        //     //     loadXMLDoc();
-        //     $.post("223.3.67.68:8000/api/check/PWD ", {
-        //             number: userName,
-        //             password: userPass
+// function sendInfo() {
+//     var userName = $("#inputIdNum ").val();
+//     console.info(userName);
+//     var userPass = $("#inputPassword ").val();
+//     console.info(userPass);
+//     // if (check() == true)
+//     //     loadXMLDoc();
+//     $.post("223.3.67.68:8000/api/check/PWD ", {
+//             number: userName,
+//             password: userPass
 
-        //         },
-        //         function(data, status) {
-        //             alert("数据: \n " + data + "\n状态: " + status);
-        //         });
-        // }
-    </script>
+//         },
+//         function(data, status) {
+//             alert("数据: \n " + data + "\n状态: " + status);
+//         });
+// }
+</script>
+
 </html>
