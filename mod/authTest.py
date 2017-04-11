@@ -43,8 +43,9 @@ headers = {
 response = requests.post(url,data = data, headers = headers, allow_redirects=False)
 keyCookie = response.headers['Set-Cookie'].split(";")[2].split(",")[1]
 
+
 headers = {
-  'cookie': keyCookie
+  'Cookie': keyCookie.strip()
 }
 
 newUrl = response.headers['Location']
@@ -54,46 +55,39 @@ login_cookie = keyCookie + ";" + jsessionid_cookie
 
 
 headers = {
-  'cookie': login_cookie
+  'Cookie': login_cookie.strip()
 }
 
 print headers
 main_get_url = 'http://my.seu.edu.cn/index.portal?.pn=p1064_p1551'
 soup = BeautifulSoup(requests.get(main_get_url,headers=headers).content,'lxml')
-list_url = soup.find('li',attrs={'id':'one3'})['onclick'].split("'")[1].split("=")[1]
+list_url = 'Znxjb20ud2lzY29tLnBvcnRhbC5zaXRlLnYyLmltcGwuRnJhZ21lbnRXaW5kb3d8ZjM0MDl8dmlld3xtYXhpbWl6ZWR8YWN0aW9uPWxpc3Q_'
 param = {'.p':list_url}
 # getJiangInfo(requests.get(indexUrl,headers=headers,params=param).content)
-soup = BeautifulSoup(requests.get(indexUrl,headers=headers,params=param).content,'lxml')
-items = soup.find_all('div',attrs={'class':'isp-service-item-info'})
-for item in items[1:]:
-	print item.find('div',attrs={'class':'jxjTitle'}).text
-	print item.find_all('div',attrs={'class':'jxjInfo'})[0].text[6:]
-	print item.find_all('div',attrs={'class':'jxjInfo'})[1].text[5:]
-	print item.find_all('div',attrs={'class':'jxjInfo'})[2].text[3:]
-	print item.find_all('div',attrs={'class':'jxjInfo'})[3].text[5:].lstrip()
+list = []
+content = requests.get(indexUrl,headers=headers,params=param).content
 # print jxjTitle
 
 def getJiangInfo(content):
 	jiangList = []
 	jiangInfo = {
-		'title':'',
-		'level':'',
-		'years':'',
-		'money':'',
-		'state':''
+		'title': '',
+		'time': '',
+		'level': '',
+		'year': '',
+		'money': ''
 	}
-	soup = BeautifulSoup(content)
-	items = soup.find_all('div',attrs={'class':'isp-service-item-info'})
+	soup = BeautifulSoup(content, 'lxml')
+	items = soup.find_all('div', attrs={'class': 'isp-service-item-info'})
 	for item in items[1:]:
-		jiangInfo['title'] = item.find('div',attrs={'class':'jxjTitle'}).text
-		jiangInfo['level'] = item.find_all('div',attrs={'class':'jxjInfo'})[0].text[6:]
-		jiangInfo['years'] = item.find_all('div',attrs={'class':'jxjInfo'})[1].text[5:]
-		jiangInfo['money'] = item.find_all('div',attrs={'class':'jxjInfo'})[2].text[3:]
-		jiangInfo['state'] = item.find_all('div',attrs={'class':'jxjInfo'})[3].text[5:].lstrip()
+		jiangInfo['title'] = item.find('div', attrs={'class': 'jxjTitle'}).text
+		jiangInfo['time'] = item.find_all('div', attrs={'class': 'jxjInfo'})[0].text[3:].strip()
+		jiangInfo['level'] = item.find_all('div', attrs={'class': 'jxjInfo'})[1].text[6:].strip()
+		jiangInfo['year'] = item.find_all('div', attrs={'class': 'jxjInfo'})[2].text[5:].strip()
+		jiangInfo['money'] = item.find_all('div', attrs={'class': 'jxjInfo'})[3].text[3:].strip()
 		jiangList.append(jiangInfo)
 	return jiangList
 
-
-# cookie = 'e7e0cbb513567c18af5aca1397a2136b, JSESSIONID_ids2=00012mLYUoeXub7gdBp1IJh6tRO:-440UE1; Path=/'
-# response = requests.post(url,data=data,headers=headers)
-# print response.headers
+list = []
+list = getJiangInfo(content)
+print list

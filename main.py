@@ -30,10 +30,20 @@ import random
 from tornado.options import define, options
 define('port', default=8000, help='run on the given port', type=int)
 
+class MainHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render('signin.html')
+
+class HomeHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render('home.html')
+
 class Application(tornado.web.Application):
 
     def __init__(self):
         handlers = [
+             (r'/',MainHandler),
+             (r'/home',HomeHandler),
              (r'/api/checkPWD',checkPwdHandler),
              (r'/api/jiang_query',jiang_queryHandler),
              (r'/api/jiang_list',jiang_listHandler),

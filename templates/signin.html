@@ -152,15 +152,16 @@ $(document).ready(function() {
             document.getElementById("inputIdNum").value = "";
             document.getElementById("inputPassword").value = "";
         } else {
-            $.post("http://223.3.67.68:8000/api/checkPWD ", {
+            $.post("./api/checkPWD ", {
                     number: userName,
                     password: userPass
                 },
                 function(data, status) {
                     // alert("数据: \n " + data + "\n状态: " + status);
                     var info = jQuery.parseJSON(data);
+                    console.log(info.code);
                     if (info.code == 200) {
-                        window.location.href = "file:///Users/donger/Documents/%E5%A5%96%E5%8A%A9%E5%AD%A6%E9%87%91/py_api/templates/home.html"
+                        window.location.href = "./home"
                     }else if(info.code == 500){
                         document.getElementById("wrong").innerHTML = "请去信息门户登陆";
                     } 

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Author  : jerry.liangj@qq.com
+import traceback
+
 from tornado.httpclient import HTTPRequest, AsyncHTTPClient,HTTPClient,HTTPError
 from cache.CookieCache import CookieCache
 import tornado.web
@@ -24,10 +26,14 @@ class checkPwdHandler(tornado.web.RequestHandler):
     def post(self):
         user = self.get_argument('number',default=None)
         password = self.get_argument('password',default=None)
-
         result = {'code':200,'content':''}
+
         try:
-            result = getCookie(self.db,user,password)
+            res = getCookie(self.db,user,password)
+            if res['code'] == 200:
+                self.set_secure_cookie('user', user)
+            else:
+                result = res
         except HTTPError:
             result['code'] = 400
         except Exception,e:
@@ -106,7 +112,7 @@ def RefreshCookie(cardnum,card_pwd):
         response = requests.post(HOST_URL,data = data, headers = headers, allow_redirects=False)
         keyCookie = response.headers['Set-Cookie'].split(";")[2].split(",")[1]
         headers = {
-          'cookie': keyCookie
+          'cookie': keyCookie.strip()
         }
         newUrl = response.headers['Location']
         response = requests.get(newUrl, headers = headers, allow_redirects=False)
@@ -116,62 +122,5 @@ def RefreshCookie(cardnum,card_pwd):
     except HTTPError:
         return 400,"password is not correct"
     except Exception,e:
+        traceback.print_exc()
         return 500,'?>?'
-
-'''
-def RefreshCookie(cardnum,card_pwd):
-    try:
-        client = HTTPClient()
-        request = HTTPRequest(
-            HOST_URL,
-            method='GET',
-            request_timeout=10
-            )
-        response = client.fetch(request)
-        cookie = response.headers['Set-Cookie']
-        cookie = cookie.split(",")[0] + ";" + cookie.split(",")[1].split(";")[0]
-        soup =BeautifulSoup(response.body,'lxml')
-        elements = soup.find_all("input",attrs={'type':'hidden'})
-        data= {
-            'username':cardnum,
-            'password':card_pwd,
-            'lt':elements[0]['value'],
-            'dllt':elements[1]['value'],
-            'execution':elements[2]['value'],
-            '_eventId':elements[3]['value'],
-            'rmShown':elements[4]['value']
-        }
-        headers = {
-            'Referer':'http://newids.seu.edu.cn/authserver/login?goto=http://my.seu.edu.cn/index.portal',
-            'Cookie':cookie
-        }
-        print 23
-        request = HTTPRequest(
-            HOST_URL,
-            method='POST',
-            headers=headers,
-            body=data,
-            request_timeout=10
-            )
-        response = client.fetch(request)
-        keyCookie = response.headers['Set-Cookie'].split(";")[2].split(",")[1]
-        headers = {
-          'cookie': keyCookie
-        }
-        newUrl = response.headers['Location']
-        client = AsyncHTTPClient()
-        request = HTTPRequest(
-            newUrl,
-            method='GET',
-            headers=headers,
-            request_timeout=10
-            )
-        response = client.fetch(request)
-        jsessionid_cookie = response.headers['Set-Cookie'].split(";")[0]
-        login_cookie = keyCookie + ";" + jsessionid_cookie
-        return 200,login_cookie
-    except HTTPError:
-        return 400,"password is not correct"
-    except Exception,e:
-        return 500,'?>?'
-        '''

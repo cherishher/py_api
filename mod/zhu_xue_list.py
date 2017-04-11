@@ -5,113 +5,52 @@ import tornado.gen
 import urllib, re
 import json,base64
 import traceback
-from BeautifulSoup import BeautifulSoup
-import xml.etree.ElementTree as ET
+import requests
 from cache.ZhuListCache import ZhuListCache
-from sqlalchemy.orm.exc import NoResultFound
-from time import time,localtime,strftime
-from auth import getCookie
+from bs4 import BeautifulSoup
+from baseQuery import BaseQueryHandler
 
-class zhu_listHandler(tornado.web.RequestHandler):
-    @property
-    def db(self):
-        return self.application.db
-        
-    def on_finish(self):
-        self.db.close()
+class zhu_listHandler(BaseQueryHandler):
 
-    def get(self):
-        self.write('hello')
+
+    def get_current_user(self):
+        return self.get_secure_cookie("user")
 
     @tornado.web.asynchronous
     @tornado.gen.engine
-    def post(self):
-        user = self.get_argument('number',default=None)
-        password = self.get_argument('password',default=None)
-
-        #read from cache
+    def get(self):
+        retjson = {}
         try:
-            status=self.db.query(ZhuListCache).filter(ZhuListCache.number==user).one()
-            if status.date > int(time())-40000 and status.text != '*' :
-                self.write(status.text)
-                self.finish()
-                return
-        except NoResultFound:
-            status = ZhuListCache(number=user,text='*',date = int(time()))
-            self.db.add(status)
-            try:
-                self.db.commit()
-            except:
-                self.db.rollback()
-        BASE_URL = "http://my.seu.edu.cn/index.portal"
-        Zhu_QUERY_URL = "http://my.seu.edu.cn/index.portal?.pn=p1064_p1067"
-        retjson = {'code':200, 'content':''}
-
-        try:
-            ret = getCookie(self.db,user,password)
-            if ret['code'] == 200:
-                cookie = ret['content']
-                client = AsyncHTTPClient()
-                request = HTTPRequest(
-                    url = Zhu_QUERY_URL,
-                    method = "GET",
-                    headers = {'Cookie':cookie},
-                    request_timeout = 15
-                    )
-                response = yield client.fetch(request)
-                soup = BeautifulSoup(response.body)
-                li_item = soup.find('li',{'id':'one2'})
-                data_url = BASE_URL + li_item['onclick'].split("'")[1]+"&pageIndex=1&pageSize=20"
-                split_array = response.headers['Set-Cookie'].split(";")
-                cookie = cookie.split(";")[0] + ";" + split_array[0]+";"+split_array[1].split(",")[1]
-                request = HTTPRequest(
-                    url = data_url,
-                    method = "GET",
-                    headers = {
-                        'Cookie':cookie,
-                        'Referer':'http://my.seu.edu.cn/index.portal?.pn=p1064_p1067',
-                        'Host':'my.seu.edu.cn'
-                        },
-                    request_timeout = 8
-                    )
-                response = yield client.fetch(request)
-                data_content = response.body
-                retjson['content'] = self.deal(response.body)
+            content = BaseQueryHandler.readFromCache(self, ZhuListCache, 40000)
+            if content == 'failed':
+                url = 'http://my.seu.edu.cn/index.portal?.p=Znxjb20ud2lzY29tLnBvcnRhbC5zaXRlLnYyLmltcGwuRnJhZ21lbnRXaW5kb3d8ZjIxODd8dmlld3xtYXhpbWl6ZWR8YWN0aW9uPWFwcGxpZWRRdWVyeQ__'
+                retjson = BaseQueryHandler.base_get(self, url)
+                if retjson['code'] == 200:
+                    content = self.getZhuInfo(retjson['content'])
+                    retjson['content'] = content
+                    BaseQueryHandler.refreshCache(self, ZhuListCache, json.dumps(retjson))
+                    self.render('yzxj.html', content=content)
+                else:
+                    self.render('fail.html')
             else:
-                retjson = ret
-        except Exception,e:
-            with open('api_error.log','a+') as f:
-                f.write(strftime('%Y%m%d %H:%M:%S in [api]', localtime(time()))+'\n'+str(str(e)+'\n[jiang_query]\t'+str(user)+'\nString:'+str(retjson)+'\n\n'))
-            retjson['code'] = 500
-            retjson['content'] = 'system error'
-        ret = json.dumps(retjson, ensure_ascii=False, indent=2)
-        self.write(ret)
-        self.finish()
+                content = json.loads(content)['content']
+                self.render('yzxj.html', content=content)
+        except Exception:
+            traceback.print_exc()
 
-        # # refresh cache
-        if retjson['code'] == 200:
-            status.date = int(time())
-            status.text = ret
-            self.db.add(status)
-            try:
-                self.db.commit()
-            except Exception,e:
-                self.db.rollback()
-
-    def deal(self,content):
-        soup = BeautifulSoup(content)
-        div = soup.findAll('div',{'class':'isp-service-item-content'})
-        div.pop(0)
-        ret_content = []
-        for item in div:
-            div_item = item.findAll('div',{'class':'jxjInfo'})
-            #change json format in return
-            temp = {
-                'name':item.find('div',{'class':'jxjTitle'}).text,
-                'time':div_item[0].text[3:],
-                'grade':div_item[1].text[6:],
-                'money':div_item[2].text[3:],
-                'member':item[3].text[5:],
-            }
-            ret_content.append(temp)
-        return ret_content
+    def getZhuInfo(self,content):
+        jiangList = []
+        soup = BeautifulSoup(content,'lxml')
+        items = soup.find_all('div',attrs={'class':'isp-service-item-info'})
+        if(items[0].find('div',attrs={'class':'jxjTitle'}) == None):
+            return jiangList
+        for item in items:
+            jiangInfo={}
+            jiangInfo['title'] = item.find('div',attrs={'class':'jxjTitle'}).text
+            jiangInfo['level'] = item.find_all('div',attrs={'class':'jxjInfo'})[0].text[6:]
+            jiangInfo['year'] = item.find_all('div',attrs={'class':'jxjInfo'})[1].text[5:]
+            jiangInfo['money'] = item.find_all('div',attrs={'class':'jxjInfo'})[2].text[3:]
+            jiangInfo['state'] = item.find_all('div',attrs={'class':'jxjInfo'})[3].text[5:]
+            jiangList.append(jiangInfo)
+            print jiangInfo
+        return jiangList
